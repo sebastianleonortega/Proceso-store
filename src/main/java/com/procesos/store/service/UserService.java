@@ -29,7 +29,6 @@ public class UserService {
         }
         userExist.get().setFirstName(user.getFirstName());
         userExist.get().setLastName(user.getLastName());
-        userExist.get().setAddress(user.getAddress());
         userExist.get().setPhone(user.getPhone());
         return userRepository.save(userExist.get());
     }
