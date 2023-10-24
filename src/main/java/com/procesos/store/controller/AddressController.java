@@ -1,7 +1,6 @@
 package com.procesos.store.controller;
 
 import com.procesos.store.model.Address;
-import com.procesos.store.model.User;
 import com.procesos.store.service.AddressService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,7 @@ public class AddressController {
     @GetMapping("address/{id}")
     public ResponseEntity<Address> getAddressById(@PathVariable Long id){
         return ResponseEntity.ok(addressService.getAddressById(id));
-    };
+    }
 
     @PostMapping("address/{id}")
     public ResponseEntity<Address>  Create(@Valid @RequestBody Address address,@PathVariable Long id){

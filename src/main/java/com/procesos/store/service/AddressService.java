@@ -17,11 +17,8 @@ public class AddressService {
     @Autowired
     private UserService userService;
 
-    public Address createAddress(Address address, Long id){
-        User user = userService.getUserById(id);
-        if (user != null){
-            throw new RuntimeException("User not found");
-        }
+    public Address createAddress(Address address, Long userId) {
+        User user = userService.getUserById(userId);
         address.setUser(user);
         return addressRepository.save(address);
     }
@@ -29,7 +26,6 @@ public class AddressService {
     public Address getAddressById(Long id){
         Optional<Address> address = addressRepository.findById(id);
         if (address.isEmpty()){
-
             throw new RuntimeException("Address not found");
         }
         return  address.get();

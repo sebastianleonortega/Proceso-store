@@ -19,27 +19,28 @@ public class UserService {
     }
 
     public User getUserById(Long id){
-        return  userRepository.findById(id).get();
+        return userRepository.findById(id).orElseThrow(()-> new RuntimeException("User not found"));
     }
 
-    public User updateUser(User user, Long id){
+    public User updateUser(User user, Long id) {
         Optional<User> userExist = userRepository.findById(id);
-        if(userExist.isEmpty()){
-            return null;
+        if (userExist.isPresent()) {
+            User existingUser = userExist.get();
+            existingUser.setFirstName(user.getFirstName());
+            existingUser.setLastName(user.getLastName());
+            existingUser.setPhone(user.getPhone());
+            return userRepository.save(existingUser);
         }
-        userExist.get().setFirstName(user.getFirstName());
-        userExist.get().setLastName(user.getLastName());
-        userExist.get().setPhone(user.getPhone());
-        return userRepository.save(userExist.get());
+        return null;
     }
 
-    public Boolean delete(Long id){
+    public Boolean delete(Long id) {
         Optional<User> userExist = userRepository.findById(id);
-        if(userExist.isEmpty()){
-            return false;
+        if (userExist.isPresent()) {
+            userRepository.delete(userExist.get());
+            return true;
         }
-        userRepository.delete(userExist.get());
-        return true;
+        return false;
     }
 
     public List<User> findAllUsers(){
