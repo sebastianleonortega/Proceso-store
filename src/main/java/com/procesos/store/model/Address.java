@@ -26,7 +26,7 @@ public class Address {
 
     @ManyToOne
     @JoinColumn(name = "id_user", referencedColumnName = "id")
-    @JsonBackReference  // Use this annotation to prevent recursion
+    @JsonBackReference
     private User user;
 
 }

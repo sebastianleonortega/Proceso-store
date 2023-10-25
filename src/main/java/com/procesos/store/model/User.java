@@ -1,5 +1,6 @@
 package com.procesos.store.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -26,12 +27,13 @@ public class User {
     @NotNull(message = "Este valor no puede ser nulo")
     @Email
     private String email;
+
     @NotNull(message = "este campo no puede estar vacio")
     @Size(min = 8)
     private String password;
 
     @OneToMany(mappedBy = "user")
-    @JsonManagedReference   // Add this annotation to prevent recursion
+    @JsonManagedReference
     List<Address> addressList;
 
 }

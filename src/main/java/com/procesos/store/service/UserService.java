@@ -1,7 +1,9 @@
 package com.procesos.store.service;
 
+import com.procesos.store.exception.NotFoundException;
 import com.procesos.store.model.User;
 import com.procesos.store.repository.UserRepository;
+import com.procesos.store.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +21,7 @@ public class UserService {
     }
 
     public User getUserById(Long id){
-        return userRepository.findById(id).orElseThrow(()-> new RuntimeException("User not found"));
+        return userRepository.findById(id).orElseThrow(()-> new RuntimeException(Constants.USER_NOT_FOUND.getMessage()));
     }
 
     public User updateUser(User user, Long id) {
@@ -31,7 +33,7 @@ public class UserService {
             existingUser.setPhone(user.getPhone());
             return userRepository.save(existingUser);
         }
-        return null;
+        throw  new NotFoundException(Constants.USER_NOT_FOUND.getMessage());
     }
 
     public Boolean delete(Long id) {
@@ -40,7 +42,7 @@ public class UserService {
             userRepository.delete(userExist.get());
             return true;
         }
-        return false;
+        throw  new NotFoundException(Constants.USER_NOT_FOUND.getMessage());
     }
 
     public List<User> findAllUsers(){
